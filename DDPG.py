@@ -144,4 +144,10 @@ class DDPG(object):
             net_2 = tf.layers.dense(net_1, n_l, activation=tf.nn.relu, trainable=trainable)
             net_3 = tf.layers.dense(net_2, n_l, activation=tf.nn.relu, trainable=trainable)
             net_4 = tf.layers.dense(net_3, n_l, activation=tf.nn.relu, trainable=trainable)
-            return tf.layers.dense(net_4, 1, activation=tf.nn.relu, trainable=trainable)  # Q(s,a)
+            net_5 = tf.layers.dense(net_4, 1, activation=tf.nn.relu, trainable=trainable)
+
+            net_2_b = tf.layers.dense(net_1, n_l, activation=tf.nn.relu, trainable=trainable)
+            net_3_b = tf.layers.dense(net_2_b, n_l, activation=tf.nn.relu, trainable=trainable)
+            net_4_b = tf.layers.dense(net_3_b, n_l, activation=tf.nn.relu, trainable=trainable)
+            net_5_b = tf.layers.dense(net_4_b, 1, activation=tf.nn.relu, trainable=trainable)
+            return  tf.math.minimum(net_5, net_5_b) #Q(s,a)
